@@ -1,0 +1,41 @@
+# HOW TO USE THIS SCRIPT AND BE LAZY
+
+## Installation
+
+1) Move the script ("syncdb") to /usr/local/bin or whatever weird alternate location you prefer. Make 
+sure its location is in your PATH. 
+
+2) Do `chmod +x syncdb` to make it executable.
+
+3) Put "syncdb.conf" in /usr/local/etc. This is where the script expects this to be, so if you don't
+   want it there you'll need to edit the script to reflect its new location.
+   
+4) The default configuration includes site details for tlw-stage1 and tlw-hg5. However, you will
+   need to edit it to reflect the names of your local databases.
+
+5) Edit syncdb.conf as required for additional sites. Details are available as an example (the first 
+   item) in the configuration file itself.
+
+6) On any server you'll be working with you'll need to do a bit of prep. To wit:
+
+   - In the home directory of the user you log in as, add a folder titled .dbdumps.
+   - In the same directory, create a file called .my.cnf. It should look like this:
+
+      [mysqldump]
+      user=A_USER_WITH_SELECT_PRIVS
+      password=THE_USERS'S_PASSWORD
+
+   Make sure that this file is NOT READABLE BY ANY USERS OTHER THAN THE OWNER, which should be the 
+   database owner.
+
+7) You will probably want to make sure your public key is on the server because this script logs
+   in like three times and will get to be a real pain in the ass otherwise.
+
+## Usage
+
+To use the script, simply type `syncdb`. The script will ask you for the name of the site you wish
+to sync -- this is keyed to the name field in syncdb.conf.
+
+## Updates
+
+Please. 

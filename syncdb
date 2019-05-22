@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# Which site?
+echo -n "Enter the site name: "
+read -e SITENAMEINPUT
+
+# read config
+CONFIG=/usr/local/etc/syncdb.conf
+
+# Create new file handle 5
+exec 5< $CONFIG
+
+# Read entries until we get a site name match
+OLDIFS=$IFS
+IFS=':'
+FOUND=0
+while read chaff SITENAME <&5 ; do
+    read chaff REMOTEHOST <&5
+    read chaff REMOTEDBHOST <&5
+    read chaff REMOTEDB <&5
+    read chaff REMOTEUSER <&5
+    read chaff LOCALDB <&5
+    read BLANK <&5
+
+    if [ "$SITENAMEINPUT" = "$SITENAME" ]; then
+         FOUND=1
+         break
+    fi
+done
+
+if [ $FOUND = 0 ]; then
+    echo "Site not found in configuration."
+    exit
+fi
+
+# Close file handle 5
+exec 5<&-
+
+# Reset IFS
+IFS=$OLDIFS
+
+# Do all the things
+# Dump the remote db
+SCRIPT="mysqldump -h $REMOTEDBHOST $REMOTEDB > ~/.dbdumps/$REMOTEDB.db"
+echo "Dumping remote db."
+if [ -z "$REMOTEUSER" ]
+then
+  ssh ${REMOTEHOST} "${SCRIPT}"
+else
+  ssh -l ${REMOTEUSER} ${REMOTEHOST} "${SCRIPT}"
+fi
+
+# Get the remote db
+echo "Retrieving remote db."
+scp $REMOTEUSER@$REMOTEHOST:~/.dbdumps/$REMOTEDB.db $HOME/.dbdumps/remote_$REMOTEDB.db
+
+# Clean up the remote
+SCRIPT="rm ~/.dbdumps/$REMOTEDB.db"
+echo "Cleaning up remote."
+if [ -z "$REMOTEUSER" ]
+then
+  ssh ${REMOTEHOST} "${SCRIPT}"
+else
+  ssh -l ${REMOTEUSER} ${REMOTEHOST} "${SCRIPT}"
+fi
+
+# Load the remote db locally
+echo "Loading remote db."
+mysql $LOCALDB < ~/.dbdumps/remote_$REMOTEDB.db
+
+# Clean up the local
+echo "Cleaning up local."
+rm ~/.dbdumps/remote_$REMOTEDB.db
+
+# Finished!
+echo "Done."
