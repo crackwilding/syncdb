@@ -6,8 +6,8 @@
 
 ```
 [mysqldump]
-user=[DATABASE USERNAME]
-password=[DATABASE PASSWORD]
+user=DATABASE USERNAME
+password=DATABASE PASSWORD
 ```
 Chmod this file 500 to prevent it being read by nefarious individuals.
 
