@@ -9,12 +9,12 @@
 user=DATABASE USERNAME
 password=DATABASE PASSWORD
 ```
-Chmod this file 500 to prevent it being read by nefarious individuals.
+2) Chmod this file 500 to prevent it being read by nefarious individuals.
 
-2) Create a directory in the home directory of the remote server titled .dbdumps. Make sure the user
+3) Create a directory in the home directory of the remote server titled .dbdumps. Make sure the user
 you log in with can write to it.
 
-3) Create a directory in your local home directory titled .dbdumps.
+4) Create a directory in your local home directory titled .dbdumps.
 
 ## Installation
 
