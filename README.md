@@ -1,5 +1,21 @@
 # HOW TO USE THIS SCRIPT AND BE LAZY
 
+## Server/local prep
+
+1) Create a file in the home directory of the remote server titled `.my.cnf`. It should contain:
+
+```
+[mysqldump]
+user=_DATABASE USERNAME_
+password=_DATABASE PASSWORD_
+```
+Chmod this file 500 to prevent it being read by nefarious individuals.
+
+2) Create a directory in the home directory of the remote server titled .dbdumps. Make sure the user
+you log in with can write to it.
+
+3) Create a directory in your local home directory titled .dbdumps.
+
 ## Installation
 
 1) Move the script ("syncdb") to /usr/local/bin or whatever weird alternate location you prefer. Make 
