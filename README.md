@@ -28,8 +28,7 @@ sure its location is in your PATH.
 3) Put "syncdb.conf" in /usr/local/etc. This is where the script expects this to be, so if you don't
    want it there you'll need to edit the script to reflect its new location.
    
-4) Edit syncdb.conf as required for additional sites. Details are available as an example (the first 
-   item) in the configuration file itself.
+4) Edit syncdb.conf as required. Details are available as an example (the first item) in the configuration file itself.
 
 5) On any server you'll be working with you'll need to do a bit of prep. To wit:
 
