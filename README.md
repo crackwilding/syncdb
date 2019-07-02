@@ -14,7 +14,7 @@ password=DATABASE PASSWORD
 3) Create a directory in the home directory of the remote server titled .dbdumps. Make sure the user
 you log in with can write to it.
 
-4) Create afile in your local home directory titled `.my.cnf`. It should be the same as step 1 (but with your local credentials).
+4) Create a file in your local home directory titled `.my.cnf`. It should be the same as step 1 (but with your local credentials).
 
 5) Create a directory in your local home directory titled .dbdumps.
 
